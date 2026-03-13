@@ -2,7 +2,7 @@
 inventory = []
 
 # Funcion para gregar productos
-def agregar_producto():
+def add_product():
         
     # Solicitar dato al usuario
         name = input("\nIngrese el nombre del producto: ")
@@ -52,7 +52,7 @@ def agregar_producto():
         inventory.append(product)
 
 # Funcion para mostrar el inventario
-def mostrar_inventario():
+def show_inventory():
         
     # Si el inventario esta vacio, imprime un mensaje que lo indique
         if inventory == []:
@@ -69,7 +69,7 @@ def mostrar_inventario():
                 )
 
 # Funcion paracalcular las estadisticas
-def calcular_estadisticas():
+def calculate_statistics():
         
     # Agregamos la variable valor total de inventario, la cual sera un acumulador
 
@@ -109,13 +109,13 @@ while True:
         continue
 
     if option == 1:
-        agregar_producto()        
+        add_product()        
 
     elif option == 2:
-        mostrar_inventario()
+        show_inventory()
 
     elif option == 3:
-         calcular_estadisticas()
+         calculate_statistics()
 
     # Si el usuario ingresa el valor 0 el programa finaliza
     else:
