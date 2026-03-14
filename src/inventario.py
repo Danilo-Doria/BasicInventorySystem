@@ -1,93 +1,104 @@
 # Crear una variable inventario y asignarle una lista vacia
 inventory = []
 
+
 # Funcion para gregar productos
 def add_product():
-        
+
     # Solicitar dato al usuario
-        name = input("\nIngrese el nombre del producto: ")
+    name = input("\nIngrese el nombre del producto: ")
 
-        # Este while repite la pregunta al usuario siempre que ingrese un valor incorrecto
-        while True:
+    # Este while repite la pregunta al usuario siempre que ingrese un valor incorrecto
+    while True:
 
-            try:
-                # Solicitar dato al usuario
-                price = float(input("\nIngrese el precio del producto: "))
-                # Solicitar dato al usuario
-                if price < 0:
-                    print("\nPor favor ingrese valores numericos positivos\n")
-                    continue
-                break
-            except ValueError:
-                print("\nPor favor ingrese solo valores numericos\n")
+        try:
+            # Solicitar dato al usuario
+            price = float(input("\nIngrese el precio del producto: "))
+            # Solicitar dato al usuario
+            if price < 0:
+                print("\nPor favor ingrese valores numericos positivos\n")
+                continue
+            break
+        except ValueError:
+            print("\nPor favor ingrese solo valores numericos\n")
 
-        while True:
+    while True:
 
-            try:
-                # Solicitar dato al usuario
-                quantity = int(input("\nIngrese el la cantidad del producto: "))
-                if quantity < 0:
-                    print("\nPor favor ingrese valores numericos positivos\n")
-                    continue
-                break
-            except ValueError:
-                print("\nPor favor ingrese solo valores numericos\n")
+        try:
+            # Solicitar dato al usuario
+            quantity = int(input("\nIngrese el la cantidad del producto: "))
+            if quantity < 0:
+                print("\nPor favor ingrese valores numericos positivos\n")
+                continue
+            break
+        except ValueError:
+            print("\nPor favor ingrese solo valores numericos\n")
 
-        # Calculo del costo total, se obtiene multiplicando precio por cantidad
-        total_cost = price * quantity
+    # Calculo del costo total, se obtiene multiplicando precio por cantidad
+    total_cost = price * quantity
 
-        # Se imprime el nombre, precio, cantidad y el total del producto y se muestra por consola
-        print(
-            f"\nProducto: {name} | Precio: {price} | Cantidad: {quantity} | Total: {total_cost}\n"
-        )
+    # Se imprime el nombre, precio, cantidad y el total del producto y se muestra por consola
+    print(
+        f"\nProducto: {name} | Precio: {price} | Cantidad: {quantity} | Total: {total_cost}\n"
+    )
 
-        # Se crea el diccionario de los productos para ser alamacenados
-        product = {
-            "nombre": name,
-            "precio": price,
-            "cantidad": quantity,
-        }
+    # Se crea el diccionario de los productos para ser alamacenados
+    product = {
+        "nombre": name,
+        "precio": price,
+        "cantidad": quantity,
+    }
 
-        # Se agrega el diccionario al final de la lista de inventarios
-        inventory.append(product)
+    # Se agrega el diccionario al final de la lista de inventarios
+    inventory.append(product)
+
 
 # Funcion para mostrar el inventario
 def show_inventory():
-        
+
     # Si el inventario esta vacio, imprime un mensaje que lo indique
-        if inventory == []:
-            print("\nInventario vacio!!\n")
+    if inventory == []:
+        print("\nInventario vacio!!\n")
 
-        else:
+    else:
 
-            # Usamos for para iterar cada producto en la lista inventario
-            for product in inventory:
+        # Usamos for para iterar cada producto en la lista inventario
+        for product in inventory:
 
-                # Se imprime los valores del diccionario llamando las claves
-                print(
-                    f"\nProducto: {product['nombre']} | Precio: {product['precio']} | Cantidad: {product['cantidad']}\n"
-                )
+            # Se imprime los valores del diccionario llamando las claves
+            print(
+                f"\nProducto: {product['nombre']} | Precio: {product['precio']} | Cantidad: {product['cantidad']}\n"
+            )
+
 
 # Funcion paracalcular las estadisticas
 def calculate_statistics():
-        
+
     # Agregamos la variable valor total de inventario, la cual sera un acumulador
+    total_inventory_value = 0
 
-        total_inventory_value = 0
+    # Agregamos la variable cantidad total de productos registrados, la cual sera un acumulador
+    total_quantity_registered_products = 0
 
-        for product in inventory:
+    for product in inventory:
 
-            # Se multiplica el precio por la cantidad y el resultado se suma a la variable de valor total de inventario
-            total_inventory_value += product["precio"] * product["cantidad"]
+        # Se multiplica el precio por la cantidad y el resultado se suma a la variable de valor total de inventario
+        total_inventory_value += product["precio"] * product["cantidad"]
 
-        print(f"\nEl valor total del inventario es: {total_inventory_value}\n")
+        # Se suma la cantidad de cada producto a la variable de cantidad total de productos registrados
+        total_quantity_registered_products += product["cantidad"]
+
+    print(f"\nEl valor total del inventario es: {total_inventory_value}\n")
+    print(
+        f"\nLa cantidad total de productos registrados es: {total_quantity_registered_products}\n"
+    )
 
 
 print("\nBienvenido al sistema de inventarios\n")
 
 # Este while repite indefinidamente las opciones hasta que el usuario decida salir
 while True:
-    
+
     # Este try lo que hace es atrapar lo que el usuario ingresa y si el tipo de variable no es la correcta
     # entonces pasa al except mostrando el mensaje de error y el ciclo se repite, ya que nunca hubo break
     try:
@@ -109,13 +120,13 @@ while True:
         continue
 
     if option == 1:
-        add_product()        
+        add_product()
 
     elif option == 2:
         show_inventory()
 
     elif option == 3:
-         calculate_statistics()
+        calculate_statistics()
 
     # Si el usuario ingresa el valor 0 el programa finaliza
     else:
