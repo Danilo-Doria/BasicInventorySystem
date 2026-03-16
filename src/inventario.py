@@ -57,7 +57,7 @@ def add_product():
 def show_inventory():
 
     # Si el inventario esta vacio, imprime un mensaje que lo indique
-    if inventory == []:
+    if not inventory:
         print("\nInventario vacio!!\n")
 
     else:
@@ -80,15 +80,21 @@ def calculate_statistics():
     # Agregamos la variable cantidad total de productos registrados, la cual sera un acumulador
     total_quantity_registered_products = 0
 
-    for product in inventory:
+    if not inventory:
+        print("\nInventario vacio, no se pueden calcular estadisticas\n")
+        return
 
-        # Se multiplica el precio por la cantidad y el resultado se suma a la variable de valor total de inventario
-        total_inventory_value += product["precio"] * product["cantidad"]
+    else:
+        for product in inventory:
 
-        # Se suma la cantidad de cada producto a la variable de cantidad total de productos registrados
-        total_quantity_registered_products += product["cantidad"]
+            # Se multiplica el precio por la cantidad y el resultado se suma a la variable de valor total de inventario
+            total_inventory_value += product["precio"] * product["cantidad"]
 
-    print(f"\nEl valor total del inventario es: {total_inventory_value}\n")
+            # Se suma la cantidad de cada producto a la variable de cantidad total de productos registrados
+            total_quantity_registered_products += product["cantidad"]
+
+    print(f"\nEl valor total del inventario es: {total_inventory_value}")
+
     print(
         f"\nLa cantidad total de productos registrados es: {total_quantity_registered_products}\n"
     )
