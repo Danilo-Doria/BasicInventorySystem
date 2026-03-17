@@ -1,37 +1,7 @@
-# Crear una variable inventario y asignarle una lista vacia
-inventory = []
+import inventario
 
 # Funcion para agregar productos
-def add_product():
-
-    # Solicitar dato al usuario
-    name = input("\nIngrese el nombre del producto: ")
-
-    # Este while repite la pregunta al usuario siempre que ingrese un valor incorrecto
-    while True:
-
-        try:
-            # Solicitar dato al usuario
-            price = float(input("\nIngrese el precio del producto: "))
-            # Solicitar dato al usuario
-            if price < 0:
-                print("\nPor favor ingrese valores numericos positivos\n")
-                continue
-            break
-        except ValueError:
-            print("\nPor favor ingrese solo valores numericos\n")
-
-    while True:
-
-        try:
-            # Solicitar dato al usuario
-            quantity = int(input("\nIngrese el la cantidad del producto: "))
-            if quantity < 0:
-                print("\nPor favor ingrese valores numericos positivos\n")
-                continue
-            break
-        except ValueError:
-            print("\nPor favor ingrese solo valores numericos\n")
+def add_product(name, price, quantity):
 
     # Calculo del costo total, se obtiene multiplicando precio por cantidad
     total_cost = price * quantity
@@ -49,20 +19,20 @@ def add_product():
     }
 
     # Se agrega el diccionario al final de la lista de inventarios
-    inventory.append(product)
+    inventario.inventory.append(product)
 
 
 # Funcion para mostrar el inventario
 def show_inventory():
 
     # Si el inventario esta vacio, imprime un mensaje que lo indique
-    if not inventory:
+    if not inventario.inventory:
         print("\nInventario vacio!!\n")
 
     else:
 
         # Usamos for para iterar cada producto en la lista inventario
-        for product in inventory:
+        for product in inventario.inventory:
 
             # Se imprime los valores del diccionario llamando las claves
             print(
@@ -87,12 +57,12 @@ def calculate_statistics():
     # Agregamos la variable cantidad total de productos registrados, la cual sera un acumulador
     total_quantity_registered_products = 0
 
-    if not inventory:
+    if not inventario.inventory:
         print("\nInventario vacio, no se pueden calcular estadisticas\n")
         return
 
     else:
-        for product in inventory:
+        for product in inventario.inventory:
 
             # Se multiplica el precio por la cantidad y el resultado se suma a la variable de valor total de inventario
             total_inventory_value += product["precio"] * product["cantidad"]
