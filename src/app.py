@@ -33,7 +33,7 @@ while True:
     if option == 1:
 
         # Solicitar dato al usuario
-        name = input("\nIngrese el nombre del producto: ")
+        product_name = input("\nIngrese el nombre del producto: ").lower()
 
         while True:
 
@@ -53,16 +53,30 @@ while True:
                 continue
             break
             
-        servicios.add_product(name, price, quantity)
+        servicios.add_product(product_name, price, quantity)
 
     elif option == 2:
+
         servicios.show_inventory()
 
     elif option == 3:
-        servicios.search_inventory()
+
+        # Solicitar el nombre del producto
+        product_name = input("\nIngrese el nombre del producto: ").lower()
+
+        product = servicios.search_inventory(product_name)
+
+        if product == None:
+            print("\nProducto no encontrado\n")
+        else:
+            print("\n",product,"\n")
 
     elif option == 4:
-        servicios.update_inventory
+
+        product_name = input("\nIngrese el nombre del producto: ").lower()
+        
+
+        servicios.update_inventory(product_name)
 
     elif option == 5:
         servicios.delete_inventory
