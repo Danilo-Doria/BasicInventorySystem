@@ -1,50 +1,94 @@
 import inventario
 
-# Funcion para agregar productos
-def add_product(product_name, price, quantity):
+
+def add_product(product_name):
+    """
+    Agrega producto a la lista inventario.
+
+    Verifica si ya existe, si es asi muestra un mensaje indicandolo
+    Si no, existe solicita el precio y la cantidad por consola al usuario.
+
+    Parametro:
+        product_name (str): Nombre del producto.
+
+    Retorna:
+        None
+    """
 
     for product in inventario.inventory:
 
         if product["nombre"] == product_name:
 
             print("\nEste producto ya  existe\n")
-        return
-            
-    # Calculo del costo total, se obtiene multiplicando precio por cantidad
+            return
+
+    while True:
+
+        try:
+
+            price = float(input("\nIngrese el precio del producto: "))
+
+            quantity = int(input("\nIngrese la cantidad del producto: "))
+
+        except ValueError:
+            print("\nPor favor ingrese solo valores numericos\n")
+            continue
+
+        if price < 0 or quantity < 0:
+            print("\nPor favor ingrese valores numericos positivos\n")
+            continue
+        break
+
     total_cost = price * quantity
 
-    # Se imprime el nombre, precio, cantidad y el total del producto y se muestra por consola
     print(
         f"\nProducto: {product_name} | Precio: {price} | Cantidad: {quantity} | Total: {total_cost}\n"
     )
 
-    # Se crea el diccionario de los productos para ser alamacenados
     product = {
         "nombre": product_name,
         "precio": price,
         "cantidad": quantity,
     }
 
-    # Se agrega el diccionario al final de la lista de inventarios
     inventario.inventory.append(product)
 
 
-# Funcion para mostrar el inventario
 def show_inventory():
+    """
+    Muestra el inventario completo.
 
-    # Si el inventario esta vacio, imprime un mensaje que lo indique
+    Si el inventario esta vacio, muestra un mensaje indicandolo.
+
+    Retorna:
+        None
+    """
+
     if not inventario.inventory:
         print("\nInventario vacio!!\n")
 
     else:
 
-        # Usamos for para iterar cada producto en la lista inventario
         for product in inventario.inventory:
 
-            # Se imprime los valores del diccionario llamando las claves
-            print(f"\nProducto: {product['nombre']} | Precio: {product['precio']} | Cantidad: {product['cantidad']}\n")
+            print(
+                f"\nProducto: {product['nombre']} | Precio: {product['precio']} | Cantidad: {product['cantidad']}\n"
+            )
+
 
 def search_inventory(product_name):
+    """
+    Busca el producto en el inventario.
+
+    Si el producto no existe, muestra un mensaje indicandolo
+
+    Parametro:
+        product_name (str): Nombre del producto.
+
+    Retorna:
+        dict: Producto encontrado.
+        None: Si el producto no existe.
+    """
 
     for product in inventario.inventory:
 
@@ -53,7 +97,20 @@ def search_inventory(product_name):
     else:
         return None
 
+
 def update_inventory(product_name):
+    """
+    Actualiza el producto en el inventario.
+
+    Si el producto no existe, mmuestra un mensaje indicandolo,
+    Si existe solicita el precio y la cantidad por consola al usuario.
+
+    Parametro:
+        product_name (str): Nombre del producto.
+
+    Retorna:
+        None
+    """
 
     for product in inventario.inventory:
 
@@ -62,10 +119,9 @@ def update_inventory(product_name):
             while True:
 
                 try:
-                    # Solicitar dato al usuario
+
                     new_price = float(input("\nIngrese el precio del producto: "))
 
-                    # Solicitar dato al usuario
                     new_quantity = int(input("\nIngrese la cantidad del producto: "))
 
                 except ValueError:
@@ -80,20 +136,52 @@ def update_inventory(product_name):
             product["precio"] = new_price
             product["cantidad"] = new_quantity
 
+            print("\nProducto actualizado correctamente\n")
+            return
+
     else:
-        return print("\nProducto no encontrado\n")
+        print("\nProducto no encontrado\n")
 
 
-def delete_inventory():
-    return
+def delete_inventory(product_name):
+    """
+    Elimina el producto en el inventario.
 
-# Funcion paracalcular las estadisticas
+    Si el producto no existe, muestra un mensaje indicandolo
+
+    Parametro:
+        product_name (str): Nombre del producto.
+
+    Retorna:
+        None
+    """
+
+    for product in inventario.inventory:
+
+        if product["nombre"] == product_name:
+
+            inventario.inventory.remove(product)
+
+            print("\nProducto eliminado correctamente\n")
+            return
+
+    else:
+        print("\nProducto no encontrado\n")
+
+
 def calculate_statistics():
+    """
+    Calcula las estadisticas del inventario.
 
-    # Agregamos la variable valor total de inventario, la cual sera un acumulador
+    Si el inventario esta vacio, muestra un mensaje indicandolo,
+    Si no esta vacio calcula el valor total del inventario y la cantidad total de productos.
+
+    Retorna:
+        None
+    """
+
     total_inventory_value = 0
 
-    # Agregamos la variable cantidad total de productos registrados, la cual sera un acumulador
     total_quantity_registered_products = 0
 
     if not inventario.inventory:
@@ -103,18 +191,20 @@ def calculate_statistics():
     else:
         for product in inventario.inventory:
 
-            # Se multiplica el precio por la cantidad y el resultado se suma a la variable de valor total de inventario
             total_inventory_value += product["precio"] * product["cantidad"]
 
-            # Se suma la cantidad de cada producto a la variable de cantidad total de productos registrados
             total_quantity_registered_products += product["cantidad"]
 
     print(f"\nEl valor total del inventario es: {total_inventory_value}")
 
-    print(f"\nLa cantidad total de productos registrados es: {total_quantity_registered_products}\n")
+    print(
+        f"\nLa cantidad total de productos registrados es: {total_quantity_registered_products}\n"
+    )
+
 
 def save_csv():
     return
+
 
 def load_csv():
     return

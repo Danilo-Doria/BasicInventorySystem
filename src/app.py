@@ -2,10 +2,10 @@ import servicios
 
 print("\nBienvenido al sistema de inventarios\n")
 
-# Este while repite indefinidamente las opciones hasta que el usuario decida salir
+# While repite indefinidamente las opciones hasta que el usuario decida salir
 while True:
 
-    # Este try lo que hace es atrapar lo que el usuario ingresa y si el tipo de variable no es la correcta
+    # Este try captura el imput del usuario, si el tipo de variable no es la correcta
     # entonces pasa al except mostrando el mensaje de error y el ciclo se repite, ya que nunca hubo break
     try:
         print("1. Agregar producto")
@@ -18,10 +18,11 @@ while True:
         print("8. Cargar CSV")
         print("9. Salir")
 
-        # La variable option recibe la opcion que desea el usuario
+        # Variable option recibe la opcion que desea el usuario
         option = int(input("\nIngresa una opcion: "))
 
-        # Si option no se encuatra en las opciones descritas, imprime un mensaje de error y entra continue omitiendo la iteraccion reiniciando el ciclo
+        # Si "option" no esta en el rango de las opciones descritas,
+        # imprime un mensaje de error y entra continue omitiendo la iteraccion reiniciando el ciclo
         if option not in range(1, 10):
             print("\nOpción inválida\n")
             continue
@@ -32,28 +33,11 @@ while True:
 
     if option == 1:
 
-        # Solicitar dato al usuario
+        # Solicitar dato al usuario y guardarlo en la variable "product_name"
         product_name = input("\nIngrese el nombre del producto: ").lower()
 
-        while True:
-
-            try:
-                # Solicitar dato al usuario
-                price = float(input("\nIngrese el precio del producto: "))
-
-                # Solicitar dato al usuario
-                quantity = int(input("\nIngrese la cantidad del producto: "))
-
-            except ValueError:
-                print("\nPor favor ingrese solo valores numericos\n")
-                continue
-
-            if price < 0 or quantity < 0:
-                print("\nPor favor ingrese valores numericos positivos\n")
-                continue
-            break
-            
-        servicios.add_product(product_name, price, quantity)
+        # Se llama a la funcion correspondiente
+        servicios.add_product(product_name)
 
     elif option == 2:
 
@@ -66,31 +50,40 @@ while True:
 
         product = servicios.search_inventory(product_name)
 
+        # Si no se encuentra el nombre del producto la funcion retorna None,
+        # entonces se muestra un mensaje que lo indique, de lo contrario 
+        # se muestra el diccionario del prodcuto
         if product == None:
             print("\nProducto no encontrado\n")
         else:
-            print("\n",product,"\n")
+            print("\n", product, "\n")
 
     elif option == 4:
 
+        # Solicitar el nombre del producto
         product_name = input("\nIngrese el nombre del producto: ").lower()
-        
 
         servicios.update_inventory(product_name)
 
     elif option == 5:
-        servicios.delete_inventory
-    
+
+        # Solicitar el nombre del producto
+        product_name = input("\nIngrese el nombre del producto: ").lower()
+
+        servicios.delete_inventory(product_name)
+
     elif option == 6:
         servicios.calculate_statistics()
 
     elif option == 7:
         servicios.save_csv()
-    
+        pass
+
     elif option == 8:
         servicios.load_csv()
+        pass
 
-    # Si el usuario ingresa el valor 0 el programa finaliza
+    # Si el usuario ingresa el valor 0 el programa finaliza y rompe el ciclo
     else:
         print("\nAdios")
         break
