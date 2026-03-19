@@ -1,4 +1,4 @@
-import inventario
+import inventario, csv
 
 
 def add_product(product_name):
@@ -174,7 +174,8 @@ def calculate_statistics():
     Calcula las estadisticas del inventario.
 
     Si el inventario esta vacio, muestra un mensaje indicandolo,
-    Si no esta vacio calcula el valor total del inventario y la cantidad total de productos.
+    Si no esta vacio calcula el valor total del inventario, la cantidad total de productos
+    El producto mas costoso y el producto con mayor stock.
 
     Retorna:
         None
@@ -183,6 +184,12 @@ def calculate_statistics():
     total_inventory_value = 0
 
     total_quantity_registered_products = 0
+
+    most_expensive_product = 0
+    most_expensive_product_name = ""
+
+    product_with_the_most_stock = 0
+    product_name_with_the_most_stock = ""
 
     if not inventario.inventory:
         print("\nInventario vacio, no se pueden calcular estadisticas\n")
@@ -195,16 +202,41 @@ def calculate_statistics():
 
             total_quantity_registered_products += product["cantidad"]
 
+            if product["precio"] > most_expensive_product:
+                most_expensive_product = product["precio"]
+                most_expensive_product_name = product["nombre"]
+
+            if product["cantidad"] > product_with_the_most_stock:
+                product_with_the_most_stock = product["cantidad"]
+                product_name_with_the_most_stock = product["nombre"]
+
     print(f"\nEl valor total del inventario es: {total_inventory_value}")
 
     print(
-        f"\nLa cantidad total de productos registrados es: {total_quantity_registered_products}\n"
+        f"\nLa cantidad total de productos registrados es: {total_quantity_registered_products}"
+    )
+
+    print(
+        f"\nEl producto mas costoso es: {most_expensive_product_name} con un precio de {most_expensive_product}"
+    )
+
+    print(
+        f"\nEl producto con mayor stock es: {product_name_with_the_most_stock} con una cantidad de {product_with_the_most_stock} en inventario\n"
     )
 
 
 def save_csv():
-    return
+
+    with open("Inventory.csv", "w", newline="", encoding="utf-8") as file:
+
+        fieldnames = list(inventario.inventory[0].keys())
+
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+        writer.writeheader()
+        writer.writerows(inventario.inventory)
 
 
+        
 def load_csv():
     return

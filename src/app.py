@@ -51,7 +51,7 @@ while True:
         product = servicios.search_inventory(product_name)
 
         # Si no se encuentra el nombre del producto la funcion retorna None,
-        # entonces se muestra un mensaje que lo indique, de lo contrario 
+        # entonces se muestra un mensaje que lo indique, de lo contrario
         # se muestra el diccionario del prodcuto
         if product == None:
             print("\nProducto no encontrado\n")
@@ -77,7 +77,6 @@ while True:
 
     elif option == 7:
         servicios.save_csv()
-        pass
 
     elif option == 8:
         servicios.load_csv()
