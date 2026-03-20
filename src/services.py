@@ -64,6 +64,7 @@ def show_inventory(inventory):
 
     if not inventory:
         print("\nInventario vacio!!\n")
+        return
 
     else:
 
