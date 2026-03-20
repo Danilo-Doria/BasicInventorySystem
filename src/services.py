@@ -1,7 +1,4 @@
-import inventario, csv
-
-
-def add_product(product_name):
+def add_product(inventory, product_name):
     """
     Agrega producto a la lista inventario.
 
@@ -9,13 +6,14 @@ def add_product(product_name):
     Si no, existe solicita el precio y la cantidad por consola al usuario.
 
     Parametro:
+        inventory (list): Lista de productos.
         product_name (str): Nombre del producto.
 
     Retorna:
         None
     """
 
-    for product in inventario.inventory:
+    for product in inventory:
 
         if product["nombre"] == product_name:
 
@@ -51,10 +49,10 @@ def add_product(product_name):
         "cantidad": quantity,
     }
 
-    inventario.inventory.append(product)
+    inventory.append(product)
 
 
-def show_inventory():
+def show_inventory(inventory):
     """
     Muestra el inventario completo.
 
@@ -64,25 +62,26 @@ def show_inventory():
         None
     """
 
-    if not inventario.inventory:
+    if not inventory:
         print("\nInventario vacio!!\n")
 
     else:
 
-        for product in inventario.inventory:
+        for product in inventory:
 
             print(
                 f"\nProducto: {product['nombre']} | Precio: {product['precio']} | Cantidad: {product['cantidad']}\n"
             )
 
 
-def search_inventory(product_name):
+def search_inventory(inventory, product_name):
     """
     Busca el producto en el inventario.
 
     Si el producto no existe, muestra un mensaje indicandolo
 
     Parametro:
+        inventory (list): Lista de productos.
         product_name (str): Nombre del producto.
 
     Retorna:
@@ -90,7 +89,7 @@ def search_inventory(product_name):
         None: Si el producto no existe.
     """
 
-    for product in inventario.inventory:
+    for product in inventory:
 
         if product["nombre"] == product_name:
             return product
@@ -98,7 +97,7 @@ def search_inventory(product_name):
         return None
 
 
-def update_inventory(product_name):
+def update_inventory(inventory, product_name):
     """
     Actualiza el producto en el inventario.
 
@@ -106,13 +105,14 @@ def update_inventory(product_name):
     Si existe solicita el precio y la cantidad por consola al usuario.
 
     Parametro:
+        inventory (list): Lista de productos.
         product_name (str): Nombre del producto.
 
     Retorna:
         None
     """
 
-    for product in inventario.inventory:
+    for product in inventory:
 
         if product["nombre"] == product_name:
 
@@ -143,24 +143,25 @@ def update_inventory(product_name):
         print("\nProducto no encontrado\n")
 
 
-def delete_inventory(product_name):
+def delete_inventory(inventory, product_name):
     """
     Elimina el producto en el inventario.
 
     Si el producto no existe, muestra un mensaje indicandolo
 
     Parametro:
+        inventory (list): Lista de productos.
         product_name (str): Nombre del producto.
 
     Retorna:
         None
     """
 
-    for product in inventario.inventory:
+    for product in inventory:
 
         if product["nombre"] == product_name:
 
-            inventario.inventory.remove(product)
+            inventory.remove(product)
 
             print("\nProducto eliminado correctamente\n")
             return
@@ -169,7 +170,7 @@ def delete_inventory(product_name):
         print("\nProducto no encontrado\n")
 
 
-def calculate_statistics():
+def calculate_statistics(inventory):
     """
     Calcula las estadisticas del inventario.
 
@@ -191,12 +192,12 @@ def calculate_statistics():
     product_with_the_most_stock = 0
     product_name_with_the_most_stock = ""
 
-    if not inventario.inventory:
+    if not inventory:
         print("\nInventario vacio, no se pueden calcular estadisticas\n")
         return
 
     else:
-        for product in inventario.inventory:
+        for product in inventory:
 
             total_inventory_value += product["precio"] * product["cantidad"]
 
@@ -223,20 +224,3 @@ def calculate_statistics():
     print(
         f"\nEl producto con mayor stock es: {product_name_with_the_most_stock} con una cantidad de {product_with_the_most_stock} en inventario\n"
     )
-
-
-def save_csv():
-
-    with open("Inventory.csv", "w", newline="", encoding="utf-8") as file:
-
-        fieldnames = list(inventario.inventory[0].keys())
-
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-
-        writer.writeheader()
-        writer.writerows(inventario.inventory)
-
-
-        
-def load_csv():
-    return

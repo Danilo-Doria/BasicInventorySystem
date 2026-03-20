@@ -1,4 +1,6 @@
-import servicios
+import inventory
+import services
+import files
 
 print("\nBienvenido al sistema de inventarios\n")
 
@@ -37,18 +39,18 @@ while True:
         product_name = input("\nIngrese el nombre del producto: ").lower()
 
         # Se llama a la funcion correspondiente
-        servicios.add_product(product_name)
+        services.add_product(inventory.inventory, product_name)
 
     elif option == 2:
 
-        servicios.show_inventory()
+        services.show_inventory(inventory.inventory)
 
     elif option == 3:
 
         # Solicitar el nombre del producto
         product_name = input("\nIngrese el nombre del producto: ").lower()
 
-        product = servicios.search_inventory(product_name)
+        product = services.search_inventory(inventory.inventory, product_name)
 
         # Si no se encuentra el nombre del producto la funcion retorna None,
         # entonces se muestra un mensaje que lo indique, de lo contrario
@@ -63,23 +65,23 @@ while True:
         # Solicitar el nombre del producto
         product_name = input("\nIngrese el nombre del producto: ").lower()
 
-        servicios.update_inventory(product_name)
+        services.update_inventory(inventory.inventory, product_name)
 
     elif option == 5:
 
         # Solicitar el nombre del producto
         product_name = input("\nIngrese el nombre del producto: ").lower()
 
-        servicios.delete_inventory(product_name)
+        services.delete_inventory(inventory.inventory, product_name)
 
     elif option == 6:
-        servicios.calculate_statistics()
+        services.calculate_statistics(inventory.inventory)
 
     elif option == 7:
-        servicios.save_csv()
+        files.save_csv(inventory.inventory)
 
     elif option == 8:
-        servicios.load_csv()
+        files.load_csv(inventory.inventory )
         pass
 
     # Si el usuario ingresa el valor 0 el programa finaliza y rompe el ciclo
