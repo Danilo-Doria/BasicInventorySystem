@@ -5,8 +5,8 @@ def add_product(inventory, product_name):
     Verifica si ya existe, si es asi muestra un mensaje indicandolo
     Si no, existe solicita el precio y la cantidad por consola al usuario.
 
-    Parametro:
-        inventory (list): Lista de productos.
+    Parametros:
+        inventory (list[dict]): Lista de diccionarios, donde cada diccionario es un producto..
         product_name (str): Nombre del producto.
 
     Retorna:
@@ -58,6 +58,9 @@ def show_inventory(inventory):
 
     Si el inventario esta vacio, muestra un mensaje indicandolo.
 
+    Parametros:
+        inventory (list[dict]): Lista de diccionarios, donde cada diccionario es un producto.
+
     Retorna:
         None
     """
@@ -81,8 +84,8 @@ def search_inventory(inventory, product_name):
 
     Si el producto no existe, muestra un mensaje indicandolo
 
-    Parametro:
-        inventory (list): Lista de productos.
+    Parametros:
+        inventory (list[dict]): Lista de diccionarios, donde cada diccionario es un producto.
         product_name (str): Nombre del producto.
 
     Retorna:
@@ -105,8 +108,8 @@ def update_inventory(inventory, product_name):
     Si el producto no existe, mmuestra un mensaje indicandolo,
     Si existe solicita el precio y la cantidad por consola al usuario.
 
-    Parametro:
-        inventory (list): Lista de productos.
+    Parametros:
+        inventory (list[dict]): Lista de diccionarios, donde cada diccionario es un producto.
         product_name (str): Nombre del producto.
 
     Retorna:
@@ -150,8 +153,8 @@ def delete_inventory(inventory, product_name):
 
     Si el producto no existe, muestra un mensaje indicandolo
 
-    Parametro:
-        inventory (list): Lista de productos.
+    Parametros:
+        inventory (list[dict]): Lista de diccionarios, donde cada diccionario es un producto.
         product_name (str): Nombre del producto.
 
     Retorna:
@@ -178,6 +181,9 @@ def calculate_statistics(inventory):
     Si el inventario esta vacio, muestra un mensaje indicandolo,
     Si no esta vacio calcula el valor total del inventario, la cantidad total de productos
     El producto mas costoso y el producto con mayor stock.
+
+    Parametros:
+        inventory (list[dict]): Lista de diccionarios, donde cada diccionario es un producto.
 
     Retorna:
         None
