@@ -1,6 +1,6 @@
 import csv
 
-def save_csv(inventory, ruta = "data/inventory.csv", incluir_header = True):
+def save_csv(inventory, path = "data/inventory.csv", incluir_header = True):
 
     """
     Guarda el inventario en un archivo CSV, si el inventario está vacío no se crea el archivo, 
@@ -18,32 +18,26 @@ def save_csv(inventory, ruta = "data/inventory.csv", incluir_header = True):
         None
     """
 
-    if not inventory:
-        print("\nInventario vacio, no se puede guardar el archivo\n")
-        return
+    try:
 
-    else:
+        with open(path, "w", newline="", encoding="utf-8") as file:
 
-        try:
+            fieldnames = ["nombre", "precio", "cantidad"]
 
-            with open(ruta, "w", newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-                fieldnames = ["nombre", "precio", "cantidad"]
+            if incluir_header:
+                writer.writeheader()
 
-                writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writerows(inventory)
 
-                if incluir_header:
-                    writer.writeheader()
-
-                writer.writerows(inventory)
-
-                print(f"\nInventario guardado en: {ruta}\n")
-                
-        except PermissionError:
-            print("\nError no tienes permisos de escritura para este archivo\n")
+            print(f"\nInventario guardado en: {path}\n")
+            
+    except PermissionError:
+        print("\nError no tienes permisos de escritura para este archivo\n")
 
 
-def load_csv(inventory, ruta = "data/inventory.csv"):
+def load_csv(inventory, path = "data/inventory.csv"):
     
     """
     Carga datos desde un archivo CSV y los agrega al inventario.
@@ -58,21 +52,60 @@ def load_csv(inventory, ruta = "data/inventory.csv"):
 
     try:
 
-        with open(ruta, "r", newline="", encoding="utf-8") as file:
+        with open(path, "r", newline="", encoding="utf-8") as file:
+
+            header = ["nombre", "precio", "cantidad"]
+
+            error = 0
 
             reader = csv.DictReader(file)
 
+            if reader.fieldnames != header:
+                print("\nEncabezados invalidos se espera: 'nombre', 'precio' y 'cantidad'\n")
+                return
+
             for row in reader:
+
+                try:
+                    price = float(row["precio"])
+
+                    if price < 0:
+                        print(f"\nPrecio negativo en la fila: {row}\n")
+                        error += 1
+                        continue
+                    
+                except ValueError:
+                    print(f"\nPrecio inválido (no numérico) en la fila: {row}\n")
+                    error += 1
+                    continue
+
+                try:
+                    quantity = int(row["cantidad"])
+
+                    if quantity < 0:
+                        print(f"\nCantidad negativa en la fila: {row}\n")
+                        error += 1
+                        continue
+                    
+                except ValueError:
+                    print(f"\nCantidad no numérica en la fila: {row}\n")
+                    error += 1
+                    continue
 
                 product = {
                 "nombre": row["nombre"],
-                "precio": float(row["precio"]),
-                "cantidad": int(row["cantidad"]),
+                "precio": price,
+                "cantidad": quantity
                 }
 
                 inventory.append(product)
 
-            print(f"\nInventario cargado desde: {ruta}\n")
+            print(f"\nInventario cargado desde: {path}\n")
+
+            if error > 0:
+                print(f"{error} filas inválidas omitidas.\n")
+            else:
+                print("No se encontraron filas inválidas.\n")
 
     except FileNotFoundError:
         print("\nError no se puede cargar debido a que el archivo no existe\n")

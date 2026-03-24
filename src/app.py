@@ -82,7 +82,6 @@ while True:
 
     elif option == 8:
         files.load_csv(inventory.inventory )
-        pass
 
     # Si el usuario ingresa el valor 0 el programa finaliza y rompe el ciclo
     else:
