@@ -36,7 +36,7 @@ while True:
     if option == 1:
 
         # Solicitar dato al usuario y guardarlo en la variable "product_name"
-        product_name = input("\nIngrese el nombre del producto: ").lower()
+        product_name = input("\nIngrese el nombre del producto: ").strip().lower()
 
         # Se llama a la funcion correspondiente
         services.add_product(inventory.inventory, product_name)
@@ -48,7 +48,7 @@ while True:
     elif option == 3:
 
         # Solicitar el nombre del producto
-        product_name = input("\nIngrese el nombre del producto: ").lower()
+        product_name = input("\nIngrese el nombre del producto: ").strip().lower()
 
         product = services.search_inventory(inventory.inventory, product_name)
 
@@ -63,14 +63,14 @@ while True:
     elif option == 4:
 
         # Solicitar el nombre del producto
-        product_name = input("\nIngrese el nombre del producto: ").lower()
+        product_name = input("\nIngrese el nombre del producto: ").strip().lower()
 
         services.update_inventory(inventory.inventory, product_name)
 
     elif option == 5:
 
         # Solicitar el nombre del producto
-        product_name = input("\nIngrese el nombre del producto: ").lower()
+        product_name = input("\nIngrese el nombre del producto: ").strip().lower()
 
         services.delete_inventory(inventory.inventory, product_name)
 
@@ -81,7 +81,10 @@ while True:
         files.save_csv(inventory.inventory)
 
     elif option == 8:
-        files.load_csv(inventory.inventory )
+        
+        new_data = files.load_csv()
+
+        files.load_option(inventory.inventory, new_data)
 
     # Si el usuario ingresa el valor 0 el programa finaliza y rompe el ciclo
     else:

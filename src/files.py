@@ -37,7 +37,7 @@ def save_csv(inventory, path = "data/inventory.csv", incluir_header = True):
         print("\nError no tienes permisos de escritura para este archivo\n")
 
 
-def load_csv(inventory, path = "data/inventory.csv"):
+def load_csv(path = "data/inventory.csv"):
     
     """
     Carga datos desde un archivo CSV y los agrega al inventario.
@@ -50,45 +50,35 @@ def load_csv(inventory, path = "data/inventory.csv"):
     Returns:
     """
 
+    new_inventory = []
+    error = 0
+
     try:
 
         with open(path, "r", newline="", encoding="utf-8") as file:
 
             header = ["nombre", "precio", "cantidad"]
-
-            error = 0
-
             reader = csv.DictReader(file)
 
             if reader.fieldnames != header:
                 print("\nEncabezados invalidos se espera: 'nombre', 'precio' y 'cantidad'\n")
-                return
+                return []
+            
+            print(f"\nInventario cargado desde: {path}\n")
 
             for row in reader:
-
+                
                 try:
                     price = float(row["precio"])
-
-                    if price < 0:
-                        print(f"\nPrecio negativo en la fila: {row}\n")
-                        error += 1
-                        continue
-                    
-                except ValueError:
-                    print(f"\nPrecio inválido (no numérico) en la fila: {row}\n")
-                    error += 1
-                    continue
-
-                try:
                     quantity = int(row["cantidad"])
 
-                    if quantity < 0:
-                        print(f"\nCantidad negativa en la fila: {row}\n")
+                    if price < 0 or quantity < 0:
+                        print(f"Valores negativos en la fila: {row}\n")
                         error += 1
                         continue
-                    
+
                 except ValueError:
-                    print(f"\nCantidad no numérica en la fila: {row}\n")
+                    print(f"Valor no numérico en la fila: {row}\n")
                     error += 1
                     continue
 
@@ -98,14 +88,14 @@ def load_csv(inventory, path = "data/inventory.csv"):
                 "cantidad": quantity
                 }
 
-                inventory.append(product)
-
-            print(f"\nInventario cargado desde: {path}\n")
+                new_inventory.append(product)
 
             if error > 0:
                 print(f"{error} filas inválidas omitidas.\n")
             else:
                 print("No se encontraron filas inválidas.\n")
+
+            return new_inventory
 
     except FileNotFoundError:
         print("\nError no se puede cargar debido a que el archivo no existe\n")
@@ -115,3 +105,23 @@ def load_csv(inventory, path = "data/inventory.csv"):
 
     except UnicodeDecodeError:
         print("\nError problema de codificación al cargar el archivo\n")
+
+
+def load_option(inventory, new_data):
+    
+    if not new_data:
+        print("El inventario actual esta vacío\n")
+        return
+    
+    option = input("\n¿Sobrescribir inventario actual? (S/N): ").strip().upper()
+    
+    while option not in ["S", "N"]:
+        
+        option = input("\nOpción inválida. Por favor ingrese 'S' para sobrescribir o 'N' para mantener el inventario actual: ").strip().upper()
+        
+    if option == "S":
+        inventory.clear()
+        inventory.extend(new_data)
+        print("\nInventario sobrescrito exitosamente\n")
+    else:
+        pass
