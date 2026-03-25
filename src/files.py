@@ -64,7 +64,7 @@ def load_csv(path = "data/inventory.csv"):
                 print("\nEncabezados invalidos se espera: 'nombre', 'precio' y 'cantidad'\n")
                 return []
             
-            print(f"\nInventario cargado desde: {path}\n")
+            print(f"\nInventario cargado desde: {path}")
 
             for row in reader:
                 
@@ -73,12 +73,12 @@ def load_csv(path = "data/inventory.csv"):
                     quantity = int(row["cantidad"])
 
                     if price < 0 or quantity < 0:
-                        print(f"Valores negativos en la fila: {row}\n")
+                        print(f"\nValores negativos en la fila: {row}")
                         error += 1
                         continue
 
                 except ValueError:
-                    print(f"Valor no numérico en la fila: {row}\n")
+                    print(f"\nValor no numérico en la fila: {row}")
                     error += 1
                     continue
 
@@ -91,9 +91,9 @@ def load_csv(path = "data/inventory.csv"):
                 new_inventory.append(product)
 
             if error > 0:
-                print(f"{error} filas inválidas omitidas.\n")
+                print(f"\n{error} filas inválidas omitidas.\n")
             else:
-                print("No se encontraron filas inválidas.\n")
+                print("\nNo se encontraron filas inválidas.\n")
 
             return new_inventory
 
@@ -112,16 +112,32 @@ def load_option(inventory, new_data):
     if not new_data:
         print("El inventario actual esta vacío\n")
         return
-    
-    option = input("\n¿Sobrescribir inventario actual? (S/N): ").strip().upper()
-    
-    while option not in ["S", "N"]:
+
+    if inventory:
+
+        option = input("\n¿Sobrescribir inventario actual? (S/N): ").strip().upper()
         
-        option = input("\nOpción inválida. Por favor ingrese 'S' para sobrescribir o 'N' para mantener el inventario actual: ").strip().upper()
-        
-    if option == "S":
-        inventory.clear()
-        inventory.extend(new_data)
-        print("\nInventario sobrescrito exitosamente\n")
+        while option not in ["S", "N"]:
+
+            print("Politica de inventarios para la opcion de : Si un producto ya existe, se suman sus cantidades y se actualiza el precio al nuevo, " \
+        "si no solo se agregan los productos nuevos")
+            
+            option = input("\nOpción inválida. Por favor ingrese 'S' para sobrescribir o 'N' para mantener el inventario actual: ").strip().upper()
+            
+        if option == "S":
+            inventory.clear()
+            inventory.extend(new_data)
+            print("\nInventario sobrescrito exitosamente\n")
+        else:
+            
+            for new_product in new_data:
+                for old_product in inventory:
+
+                    if old_product["nombre"].lower() == new_product["nombre"].lower():
+                        old_product["precio"] = new_product["precio"]
+                        old_product["cantidad"] += new_product["cantidad"]
+                    
+
     else:
-        pass
+        inventory.extend(new_data)
+                        
