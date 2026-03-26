@@ -67,11 +67,16 @@ def load_csv(path = "data/inventory.csv"):
             print(f"\nInventario cargado desde: {path}")
 
             for row in reader:
+
+                if len(row) != 3 or None in row.values():
+                        print(f"\nFila inválida, cantidad de columnas incorrectas: {row}")
+                        error += 1
+                        continue
                 
                 try:
                     price = float(row["precio"])
                     quantity = int(row["cantidad"])
-
+                           
                     if price < 0 or quantity < 0:
                         print(f"\nValores negativos en la fila: {row}")
                         error += 1
@@ -115,12 +120,12 @@ def load_option(inventory, new_data):
 
     if inventory:
 
-        option = input("\n¿Sobrescribir inventario actual? (S/N): ").strip().upper()
+        print("Politica de inventarios para la opcion de fusion (N): Si un producto ya existe, \n" \
+        "se suman sus cantidades y se actualiza el precio al del archivo CSV, si no solo se agregan los productos nuevos")
+         
+        option = input("\n¿Sobrescribir inventario actual(S) o fusionar (N)? (S/N): ").strip().upper()
         
         while option not in ["S", "N"]:
-
-            print("Politica de inventarios para la opcion de : Si un producto ya existe, se suman sus cantidades y se actualiza el precio al nuevo, " \
-        "si no solo se agregan los productos nuevos")
             
             option = input("\nOpción inválida. Por favor ingrese 'S' para sobrescribir o 'N' para mantener el inventario actual: ").strip().upper()
             
@@ -131,12 +136,15 @@ def load_option(inventory, new_data):
         else:
             
             for new_product in new_data:
+
                 for old_product in inventory:
 
-                    if old_product["nombre"].lower() == new_product["nombre"].lower():
+                    if old_product["nombre"].strip().lower() == new_product["nombre"].strip().lower():
                         old_product["precio"] = new_product["precio"]
                         old_product["cantidad"] += new_product["cantidad"]
-                    
+                        break
+                else:
+                    inventory.append(new_product)
 
     else:
         inventory.extend(new_data)

@@ -2,7 +2,7 @@ import inventory
 import services
 import files
 
-print("\nBienvenido al sistema de inventarios\n")
+print("\nBienvenido al sistema de inventarios")
 
 # While repite indefinidamente las opciones hasta que el usuario decida salir
 while True:
@@ -10,7 +10,7 @@ while True:
     # Este try captura el imput del usuario, si el tipo de variable no es la correcta
     # entonces pasa al except mostrando el mensaje de error y el ciclo se repite, ya que nunca hubo break
     try:
-        print("1. Agregar producto")
+        print("\n1. Agregar producto")
         print("2. Mostrar inventario")
         print("3. Buscar en inventario")
         print("4. Actualizar")
