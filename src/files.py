@@ -41,14 +41,14 @@ def load_csv(path="data/inventory.csv"):
     Retorna: lista vacia si no se pueden cargar los datos.
     """
 
-    # Nueva lista para almacenar los productos cargados desde el archivo CSV.
+    # Nueva lista vacia para almacenar los productos cargados desde el archivo CSV.
     new_inventory = []
     # Variable para contar el numero de filas invalidas encontradas durante la carga del archivo CSV.
     error = 0
 
     try:
         with open(path, "r", newline="", encoding="utf-8") as file:
-
+            # Variable 'header' para validar los encabezados del archivo CSV
             header = ["nombre", "precio", "cantidad"]
             reader = csv.DictReader(file)
 
@@ -75,7 +75,7 @@ def load_csv(path="data/inventory.csv"):
                     print(f"\nFila inválida, valor no numérico en la fila: {row}")
                     error += 1
                     continue
-
+                # Variable para almacenar productos en diccionarios
                 product = {
                     "nombre": row["nombre"],
                     "precio": price,

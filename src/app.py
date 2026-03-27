@@ -23,7 +23,7 @@ def inventory_system_managment():
             print("8. Cargar CSV (Asegurese de que el nombre del archivo sea 'inventory.csv')")
             print("9. Salir")
 
-            # Variable option recibe la opcion que desea el usuario
+            # Variable 'option' recibe la opcion que desea el usuario
             option = int(input("\nIngresa una opcion: "))
 
             # Si "option" no esta en el rango de las opciones descritas,
@@ -31,14 +31,14 @@ def inventory_system_managment():
             if option not in range(1, 10):
                 print("\nOpción inválida")
                 continue
-        # Si 'option' no es un valor numericos, imprime un mensaje de error
+        # Si 'option' no es un valor numerico, imprime un mensaje de error
         except ValueError:
             print("\nPor favor solo digite valores numericos")
             continue
 
         if option == 1:
 
-            # Solicitar dato al usuario y guardarlo en la variable "product_name"
+            # Solicitar dato al usuario y guardarlo en la variable 'product_name'
             product_name = input("\nIngrese el nombre del producto: ").strip().lower()
 
             # Se llama a la funcion de agregar productos
@@ -52,24 +52,24 @@ def inventory_system_managment():
             # Solicitar el nombre del producto
             product_name = input("\nIngrese el nombre del producto: ").strip().lower()
             # Se llama a la funcion de buscar producto
-            services.search_inventory(inventory.inventory, product_name)
+            services.search_product(inventory.inventory, product_name)
 
         elif option == 4:
 
             # Solicitar el nombre del producto
             product_name = input("\nIngrese el nombre del producto: ").strip().lower()
             # Se llama a la funcion de actualizar producto
-            services.update_inventory(inventory.inventory, product_name)
+            services.update_product(inventory.inventory, product_name)
 
         elif option == 5:
 
             # Solicitar el nombre del producto
             product_name = input("\nIngrese el nombre del producto: ").strip().lower()
             # Se llama a la funcion de eliminar producto
-            services.delete_inventory(inventory.inventory, product_name)
+            services.delete_product(inventory.inventory, product_name)
 
         elif option == 6:
-            # Se llama a la funcion de calcular estadisticas
+            # Se llama a la funcion de calcular estadisticas del inventario
             services.calculate_statistics(inventory.inventory)
 
         elif option == 7:
@@ -87,6 +87,6 @@ def inventory_system_managment():
             print("\nAdios")
 
     # Este programa gestiona los productos en el inventario usando un menu interactivo
-    # usando While True try except se valida en cada input que el usuario ingrese los datos correctos
+    # usando While y try except se valida en cada input que el usuario ingrese los datos correctos
     # Se pueden agregar, mostrar, buscar, actualizar, eliminar productos, calcular estadisticas del inventario
     # y guardar o cargar el inventario desde un archivo CSV.

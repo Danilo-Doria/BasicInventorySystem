@@ -25,7 +25,7 @@ python main.py
 ```
 
 ## ▶️ Usage
-After running the program, a menu will appear in the terminal where you can:
+After running the program, a menu in spanish will appear in the terminal where you can:
 1. Agregar producto
 2. Mostrar inventario
 3. Buscar en inventario

@@ -18,7 +18,7 @@ def add_product(inventory, product_name):
         if product["nombre"] == product_name:
             print("\nEste producto ya  existe\n")
             return None
-        
+    # Variable booleana para salir del bucle 
     retry = False
 
     while not retry:
@@ -32,11 +32,11 @@ def add_product(inventory, product_name):
                 retry = True
         except ValueError:
             print("\nPor favor ingrese solo valores numericos")
-
+    # Variable para calcular el costo total (precio * cantidad)
     total_cost = price * quantity
 
     print(f"\nProducto: {product_name} | Precio: {price} | Cantidad: {quantity} | Total: {total_cost}")
-
+    # Variable para almacenar productos en diccionarios
     product = {
         "nombre": product_name,
         "precio": price,
@@ -70,7 +70,7 @@ def show_inventory(inventory):
         return None
 
 
-def search_inventory(inventory, product_name):
+def search_product(inventory, product_name):
     """
     Busca el producto en el inventario.
 
@@ -95,7 +95,7 @@ def search_inventory(inventory, product_name):
         return None
 
 
-def update_inventory(inventory, product_name):
+def update_product(inventory, product_name):
     """
     Actualiza el producto en el inventario.
 
@@ -113,7 +113,7 @@ def update_inventory(inventory, product_name):
 
     for product in inventory:
         if product["nombre"] == product_name:
-
+            # Variable booleana para salir del bucle 
             retry = False
 
             while not retry:
@@ -138,7 +138,7 @@ def update_inventory(inventory, product_name):
         return None
 
 
-def delete_inventory(inventory, product_name):
+def delete_product(inventory, product_name):
     """
     Elimina el producto en el inventario.
 
@@ -178,14 +178,19 @@ def calculate_statistics(inventory):
         None: Si el inventario esta vacio.
         None: Si el inventario no esta vacio, se muestran las estadisticas.
     """
-
+    # Variable para guardar el calculo del valor total del inventario
     total_inventory_value = 0
+    # Variable para guardar el calculo de la cantidad total de prodcutos en inventario
     total_quantity_registered_products = 0
 
+    # Variable para guardar el nombre del producto mas costoso del inventario
     most_expensive_product_name = ""
+    # Variable para guardar el producto con mayor cantidad del inventario
     product_name_with_the_most_stock = ""
     
+    # Variable para guardar el valor del producto mas costoso
     most_expensive_product = 0
+    # Variable para guardar el valor del producto con mayor cantidad
     product_with_the_most_stock = 0
     
 
