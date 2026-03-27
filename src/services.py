@@ -13,7 +13,7 @@ def add_product(inventory, product_name):
         None: Si el producto ya existe.
         None: Si el producto no existe, se agrega al inventario.
     """
-
+    
     for product in inventory:
         if product["nombre"] == product_name:
             print("\nEste producto ya  existe\n")
@@ -206,10 +206,7 @@ def calculate_statistics(inventory):
                 product_name_with_the_most_stock = product["nombre"]
 
     print(f"\nEl valor total del inventario es: {total_inventory_value}")
-
     print(f"\nLa cantidad total de productos registrados es: {total_quantity_registered_products}")
-
     print(f"\nEl producto mas costoso es: {most_expensive_product_name} con un precio de {most_expensive_product}")
-
     print(f"\nEl producto con mayor stock es: {product_name_with_the_most_stock} con una cantidad de {product_with_the_most_stock} en inventario")
     return None

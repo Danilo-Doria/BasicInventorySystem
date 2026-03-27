@@ -10,8 +10,8 @@ def inventory_system_managment():
     # While repite indefinidamente las opciones hasta que el usuario decida salir (9)
     while option != 9:
 
-        # Este try captura el imput del usuario, si el tipo de variable no es la correcta
-        # entonces pasa al except mostrando el mensaje de error y el ciclo se repite, ya que nunca hubo break
+        # try captura el imput del usuario, si el tipo de variable no es la correcta
+        # entonces pasa al except mostrando el mensaje de error y el ciclo se repite
         try:
             print("\n1. Agregar producto")
             print("2. Mostrar inventario")
@@ -86,7 +86,7 @@ def inventory_system_managment():
         else:
             print("\nAdios")
 
-
     # Este programa gestiona los productos en el inventario usando un menu interactivo
-    # usando While True y try except se valida en cada input que el usuario ingrese los datos correctos
-    # Se usa el ciclo for para recorrer los diccionarios en la lista de inventario, logrando asi observar el inventario y obtener las estadisticas.
+    # usando While True try except se valida en cada input que el usuario ingrese los datos correctos
+    # Se pueden agregar, mostrar, buscar, actualizar, eliminar productos, calcular estadisticas del inventario
+    # y guardar o cargar el inventario desde un archivo CSV.

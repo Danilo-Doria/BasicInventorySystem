@@ -11,7 +11,8 @@ def save_csv(inventory, path="data/inventory.csv", incluir_header=True):
         incluir_header: Booleano que indica si se deben escribir los encabezados en el archivo CSV, Por defecto True.
 
     Retorna:
-        None: Si el inventario esta vacio.
+        None: Si el inventario se guardo exitosamente.
+        None: Si se genero un error al guardar el archivo.
     """
 
     try:
@@ -35,12 +36,14 @@ def load_csv(path="data/inventory.csv"):
     Carga datos desde un archivo CSV y los agrega al inventario.
 
     Parametros:
-        ruta (str, opcional): Ruta del archivo CSV a leer, Por defecto "data/inventory.csv".
+        Ruta del archivo CSV a leer, Por defecto "data/inventory.csv".
 
-    Retorna:
+    Retorna: lista vacia si no se pueden cargar los datos.
     """
 
+    # Nueva lista para almacenar los productos cargados desde el archivo CSV.
     new_inventory = []
+    # Variable para contar el numero de filas invalidas encontradas durante la carga del archivo CSV.
     error = 0
 
     try:
@@ -65,11 +68,11 @@ def load_csv(path="data/inventory.csv"):
                     quantity = int(row["cantidad"])
 
                     if price < 0 or quantity < 0:
-                        print(f"\nValores negativos en la fila: {row}")
+                        print(f"\nFila inválida,valores negativos en la fila: {row}")
                         error += 1
                         continue
                 except ValueError:
-                    print(f"\nValor no numérico en la fila: {row}")
+                    print(f"\nFila inválida, valor no numérico en la fila: {row}")
                     error += 1
                     continue
 
@@ -83,19 +86,24 @@ def load_csv(path="data/inventory.csv"):
             
             if new_inventory:
                 if error > 0:
-                    print(f"\n{error} filas inválidas omitidas.")
+                    print(f"\n{error} filas inválidas omitidas")
+                    print("\nInventario cargado exitosamente")
                 else:
-                    print("\nNo se encontraron filas inválidas.")
-                return new_inventory
+                    print("\nNo se encontraron filas inválidas")
+                    print("\nInventario cargado exitosamente")
+            return new_inventory
 
     except FileNotFoundError:
         print("\nError no se puede cargar debido a que el archivo no existe")
+        return []
 
     except PermissionError:
         print("\nError no tienes permisos para escribir en esa ubicación")
+        return []
 
     except UnicodeDecodeError:
         print("\nError problema de codificación al cargar el archivo")
+        return []
 
 
 def load_option(inventory, new_data):
@@ -110,15 +118,19 @@ def load_option(inventory, new_data):
         inventory (list[dict]): Lista donde se almacenarán los productos cargados (En memoria).
         new_data (list[dict]): Lista donde se almacenarán los productos cargados (En archivo CSV).
 
-    Retorna:
+    Retorna: 
+        None: Si el inventario (new_data) esta vacio.
+        None: Si el inventario se sobrescribió exitosamente.
+        None: Si el inventario se fusionó exitosamente.
     """
 
     if not new_data:
-        print("\nEl inventario actual esta vacío")
+        print("\nNo se cargaron productos debido a que el inventario está vacío")
         return None
+    
     if inventory:
-        print("Politica de inventarios para la opcion de fusion (N): Si un producto ya existe, \n"
-            "se suman sus cantidades y se actualiza el precio al del archivo CSV, si no solo se agregan los productos nuevos")
+        print("\nPolitica de inventarios para la opcion de fusion (N): Si un producto ya existe, \n"
+            "se suman sus cantidades y se actualiza el precio al del archivo CSV, si no solo se agregan los productos nuevos.")
 
         option = (input("\n¿Sobrescribir inventario actual(S) o fusionar (N)? (S/N): ").strip().upper())
 
@@ -129,7 +141,7 @@ def load_option(inventory, new_data):
         if option == "S":
             inventory.clear()
             inventory.extend(new_data)
-            print("\nInventario sobrescrito exitosamente")
+            print("\nInventario sobreescrito exitosamente")
             return None
         else:
             for new_product in new_data:
@@ -140,6 +152,7 @@ def load_option(inventory, new_data):
                         break
                 else:
                     inventory.append(new_product)
+            print("\nInventario fusionado exitosamente")
             return None
     else:
         inventory.extend(new_data)
