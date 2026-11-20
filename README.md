@@ -56,5 +56,10 @@ After running the program, a menu in spanish will appear in the terminal where y
     ├── inventory.py
     └── services.py
 ```
-## 👤 Author
-This project was created by **[Danilo Andres Doria Diaz](https://github.com/Danilo-Doria)**.
+---
+
+## 👨💻 Author
+
+- GitHub: **[Danilo-Doria](https://github.com/Danilo-Doria)**
+- LinkedIn: **[Danilo Doria Diaz](https://www.linkedin.com/in/danilo-doria-diaz)**
+- Mail: **danilodoria519@gmail.com**
